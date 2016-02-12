@@ -1560,10 +1560,9 @@ class RunEngine:
                         if row[0].strip() == 'Station MAC':
                             hit_clients = True
                             continue
-                        if len(row) < 14:
-                            continue
                         if row[0].strip() == 'BSSID':
                             continue
+                        if len(row) < 14: continue
                         enc = row[5].strip()
                         wps = False
                         # Ignore non-WPA and non-WEP encryption
