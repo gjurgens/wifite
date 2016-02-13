@@ -2274,7 +2274,7 @@ class WPAAttack(Attack):
                               (GR + sec_to_hms(self.RUN_CONFIG.WPA_ATTACK_TIMEOUT - seconds_running) + W, \
                                G + str(self.RUN_CONFIG.WPA_DEAUTH_COUNT) + W, \
                                G + target_clients[client_index].bssid + W),
-                        cmd.append('-h')
+                        cmd.append('-c')
                         cmd.append(target_clients[client_index].bssid)
                     cmd.append(self.iface)
                     stdout.flush()
@@ -3167,10 +3167,10 @@ class WEPAttack(Attack):
                    '-b', target.bssid,
                    '-x', str(self.RUN_CONFIG.WEP_PPS)]  # Packets per second
             if client_mac != '':
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(client_mac)
             elif len(clients) > 0:
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(clients[0].bssid)
             cmd.append(iface)
 
@@ -3184,10 +3184,10 @@ class WEPAttack(Attack):
                    '-n', '82',  # Maxmimum packet length
                    '-F']  # Automatically choose the first packet
             if client_mac != '':
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(client_mac)
             elif len(clients) > 0:
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(clients[0].bssid)
             cmd.append(iface)
 
@@ -3200,10 +3200,10 @@ class WEPAttack(Attack):
                    '-m', '100',  # Minimum packet length (bytes)
                    '-F']  # Automatically choose the first packet
             if client_mac != '':
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(client_mac)
             elif len(clients) > 0:
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(clients[0].bssid)
             cmd.append(iface)
 
@@ -3213,7 +3213,7 @@ class WEPAttack(Attack):
                    '--caffe-latte',
                    '-b', target.bssid]
             if len(clients) > 0:
-                cmd.append('-h')
+                cmd.append('-c')
                 cmd.append(clients[0].bssid)
             cmd.append(iface)
 
@@ -3228,7 +3228,7 @@ class WEPAttack(Attack):
             cmd = ['aireplay-ng',
                    '--ignore-negative-one',
                    '--cfrag',
-                   '-h', clients[0].bssid,
+                   '-c', clients[0].bssid,
                    iface]
 
         return cmd
@@ -3250,7 +3250,7 @@ class WEPAttack(Attack):
                    '--ignore-negative-one',
                    '--deauth', str(self.RUN_CONFIG.WPA_DEAUTH_COUNT),
                    '-a', target.bssid,
-                   '-h', client.bssid,
+                   '-c', client.bssid,
                    iface]
             call(cmd, stdout=DN, stderr=DN)
 
