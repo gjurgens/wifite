@@ -169,7 +169,7 @@ class RunConfiguration:
 
         # WPA variables
         self.WPA_DISABLE = False  # Flag to skip WPA handshake capture
-        self.WPA_STRIP_HANDSHAKE = True  # Use pyrit or tshark (if applicable) to strip handshake
+        self.WPA_STRIP_HANDSHAKE = False  # Use pyrit or tshark (if applicable) to strip handshake
         self.WPA_DEAUTH_COUNT = 5  # Count to send deauthentication packets
         self.WPA_DEAUTH_TIMEOUT = 10  # Time to wait between deauthentication bursts (in seconds)
         self.WPA_ATTACK_TIMEOUT = 500  # Total time to allow for a handshake attack (in seconds)
@@ -2291,7 +2291,7 @@ class WPAAttack(Attack):
 
                 # Spawn pcapfix, if broken, fix wpa-01.cap.temp, rewrite fixed pcap to original location
                 if program_exists('pcapfix'):
-                    cmd = ['pcapfix', self.RUN_CONFIG.temp + 'wpa-01.cap.temp']
+                    cmd = ['pcapfix', self.RUN_CONFIG.temp + 'wpa-01.cap.temp', '-o', self.RUN_CONFIG.temp + 'fixed_wpa-01.cap.temp']
                     proc = Popen(cmd, stdout=DN, stderr=DN)
                     proc.wait() # wait until pcapfix is complete
                     # Rename fixed pcap file only if it exists
@@ -2576,7 +2576,7 @@ class WPAAttack(Attack):
             cmd = ['pyrit',
                    '-r', capfile,
                    '-o', capfile + '.temp',
-                   'stripLive']
+                   'strip']
             call(cmd, stdout=DN, stderr=DN)
             rename(capfile + '.temp', output_file)
 
