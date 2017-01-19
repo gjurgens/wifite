@@ -1960,7 +1960,7 @@ def send_interrupt(process):
         pass  # Trying to kill "None"
 
 
-def get_mac_address(iface):
+def get_mac_address_original(iface):
     """
         Returns MAC address of "iface".
     """
@@ -1973,6 +1973,14 @@ def get_mac_address(iface):
     if mac.find('-') != -1: mac = mac.replace('-', ':')
     if len(mac) > 17: mac = mac[0:17]
     return mac
+#Fixed version for error: "unable co create keystream on wep"
+def get_mac_address(iface):
+    """
+        Returns MAC address of "iface".
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack('256s', iface[:15]))
+    return ''.join(['%02x:' % ord(char) for char in info[18:24]])[:-1]
 
 
 def generate_random_mac(old_mac):
