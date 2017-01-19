@@ -78,6 +78,7 @@ import os  # File management
 import time  # Measuring attack intervals
 import random  # Generating a random MAC address.
 import errno  # Error numbers
+import fcntl, socket, struct #For fixing error on WEP 'unable to create keystream'
 
 from sys import argv  # Command-line arguments
 from sys import stdout  # Flushing
